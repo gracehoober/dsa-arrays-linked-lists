@@ -31,7 +31,7 @@ class LinkedList {
       this.tail.next = newNode;
       this.tail = newNode;
     }
-    //this.length++;
+    this.length++;
   }
 
   /** unshift(val): add new value to start of list. */
@@ -40,7 +40,7 @@ class LinkedList {
     const newNode = new Node(val)
     newNode.next = this.head;
     this.head = newNode;
-    //this.length++;
+    this.length++;
   }
 
   /** pop(): return & remove last item. */
@@ -49,35 +49,71 @@ class LinkedList {
     if(this.head === null){
       throw new Error("List is empty")
     }
-    const current = this.head;
+    let current = this.head;
     const tail = this.tail;
     while(current !== null){
       if(current.next === this.tail){
         this.tail = current;
-        this.tail.next = null;
         break;
       }
       current = current.next;
     }
+    this.legnth--;
     return tail;
   }
 
   /** shift(): return & remove first item. */
 
   shift() {
+    if (this.head === null) {
+      throw new Error("List is empty")
+    }
 
+    const head = this.head;
+    this.head = head.next;
+
+    this.length--;
+    return head;
   }
 
   /** getAt(idx): get val at idx. */
 
   getAt(idx) {
+    if (idx > this.length || idx <= 0) {
+      throw new Error('Index is invalid');
+    }
 
+    let current = this.head;
+    let count = 1;
+
+    while (current !== null) {
+      if (count === idx) {
+        return current;
+      }
+      current = current.next;
+      count++;
+    }
   }
 
   /** setAt(idx, val): set val at idx to val */
 
   setAt(idx, val) {
+    if (idx > this.length || idx <= 0) {
+      throw new Error('Index is invalid');
+    }
 
+    const newNode = new Node(val);
+    const current = this.head;
+    let count = 1;
+
+    while (current !== null) {
+      if (count === idx) {
+        newNode.next = current;
+        current = newNode;
+      }
+      current = current.next;
+      count++;
+    }
   }
 
   /** insertAt(idx, val): add node w/val before idx. */
