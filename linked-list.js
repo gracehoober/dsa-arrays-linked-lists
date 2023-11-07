@@ -37,29 +37,64 @@ class LinkedList {
   /** unshift(val): add new value to start of list. */
 
   unshift(val) {
-    const newNode = new Node(val)
+    const newNode = new Node(val);
     newNode.next = this.head;
-    this.head = newNode;
+
+    if(this.length === 0){
+      this.head = newNode;
+      this.tail = newNode;
+    }else{
+      this.head = newNode;
+    }
+
     this.length++;
   }
 
   /** pop(): return & remove last item. */
+  /**
+   * input = {val:5, next:10(n)} -> {val:10, next: null}
+   *          this.head             this.tail           this.length = 2
+   *
+   * end = 10
+   * current = {val:5, next:10(n)}
+   * this.tail = {val:5, next:null}
+   */
 
   pop() {
     if(this.head === null){
       throw new Error("List is empty")
     }
-    let current = this.head;
-    const tail = this.tail;
+    let end = this.tail.val;
+    //find value prior to the tail
+    let current = this.head
+    
     while(current !== null){
       if(current.next === this.tail){
+        //reassign the prior value as the new tail
         this.tail = current;
-        break;
+        this.tail.next = null;
+
       }
-      current = current.next;
+      current = current.next
     }
-    this.legnth--;
-    return tail;
+    this.length--;
+    return end
+    //return the prior tail.val
+
+
+
+    // let current = this.head;//{val:5, next:10}
+    // const tail = this.tail;//{val:10, next:null}
+    // while(current !== null){
+    //   if(current.next === this.tail){
+    //     this.tail = current;
+    //     break;
+    //   }
+    //   current = current.next;
+    // }
+    // this.length--;
+
+    // return tail.val;
   }
 
   /** shift(): return & remove first item. */
@@ -73,7 +108,7 @@ class LinkedList {
     this.head = head.next;
 
     this.length--;
-    return head;
+    return head.val;
   }
 
   /** getAt(idx): get val at idx. */
