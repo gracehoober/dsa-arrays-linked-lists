@@ -52,11 +52,11 @@ class LinkedList {
 
   /** pop(): return & remove last item. */
   /**
-   * input = {val:5, next:10(n)} -> {val:10, next: null}
-   *          this.head             this.tail           this.length = 2
+   * input = {val:5, next:null}
+   *          this.head  this.tail           this.length = 1
    *
-   * end = 10
-   * current = {val:5, next:10(n)}
+   * end = 5
+   * current = {val:5, next:null}
    * this.tail = {val:5, next:null}
    */
 
@@ -64,20 +64,31 @@ class LinkedList {
     if(this.head === null){
       throw new Error("List is empty")
     }
+
     let end = this.tail.val;
+    if(this.length === 1){
+      this.head = null;
+      this.tail =null;
+      this.length = 0;
+      return end;
+    }
     //find value prior to the tail
     let current = this.head
-    
+
     while(current !== null){
       if(current.next === this.tail){
         //reassign the prior value as the new tail
         this.tail = current;
         this.tail.next = null;
-
+        console.log(current, " current value in each iteration.")
+        break;
       }
       current = current.next
+      console.log(current, " current after incrementation")
     }
+
     this.length--;
+
     return end
     //return the prior tail.val
 
